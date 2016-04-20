@@ -1,0 +1,68 @@
+Shiny Application and Pitch
+========================================================
+author: Luke Soltis
+date: 4/20/2016
+
+
+
+My Application
+========================================================
+
+It is very simple and adds two numbers.  
+
+Inputs
+- Number 1
+- Number 2
+
+Outputs
+- Output Sum
+
+Uses an Action Button
+
+Slide With ui.R Code (Not Commented)
+========================================================
+
+```{r, echo = TRUE}
+library(shiny)
+shinyUI(pageWithSidebar(
+  headerPanel("Add 2 Numbers"),
+  sidebarPanel(
+    textInput(inputId = "num1", label = "Number 1", value = 1),
+    textInput(inputId = "num2", label = "Number 2", value = 1),
+    actionButton(inputId = "gobutton", label = "Add")
+    ),
+    
+    mainPanel(
+    p('Number 1'),
+    textOutput('num1'),
+    p('Number 2'),
+    textOutput('num2'),
+    p('Output Sum'),
+    textOutput('sum1')
+  )
+))
+```
+
+Slide With server.R Code (Not Commented)
+========================================================
+
+```{r, echo=TRUE}
+library(shiny)
+num1 <<- 1
+num2 <<- 1
+
+shinyServer(
+  function(input, output) {
+    
+    output$num1 <- renderText({input$num1})
+    output$num2 <- renderText({input$num2})
+        output$sum1 <- renderText({
+      input$gobutton
+      isolate(as.numeric(input$num1) + as.numeric(input$num2))})
+  }
+)
+```
+Questions
+========================================================
+
+Thank you for viewing my presentation!
